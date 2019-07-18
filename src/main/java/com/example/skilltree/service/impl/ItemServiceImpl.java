@@ -5,8 +5,6 @@ import com.example.skilltree.dto.ItemLevelDto;
 import com.example.skilltree.enums.ItemType;
 import com.example.skilltree.mapper.ItemLevelMapper;
 import com.example.skilltree.mapper.ItemMapper;
-import com.example.skilltree.model.Item;
-import com.example.skilltree.model.ItemLevel;
 import com.example.skilltree.repository.ItemLevelRepository;
 import com.example.skilltree.repository.ItemRepository;
 import com.example.skilltree.service.ItemService;
@@ -29,24 +27,21 @@ public class ItemServiceImpl implements ItemService {
     public List<ItemDto> findAllItems(ItemType itemType) {
         return itemRepository.findAllByType(itemType)
                 .stream()
-                .map(itemMapper::toItemDto)
+                .map(itemMapper::toDto)
                 .collect(Collectors.toList());
     }
 
     @Override
     public ItemDto findItemByName(ItemType itemType, String name) {
         return itemRepository.findByTypeAndName(itemType, name)
-                .map(itemMapper::toItemDto)
+                .map(itemMapper::toDto)
                 .orElseThrow();
     }
 
     @Override
     public List<ItemLevelDto> findAllItemLevels(ItemType itemType, String name) {
-        List<ItemLevel> itemLevels = itemRepository.findByTypeAndName(itemType, name)
-                .map(Item::getItemLevels)
-                .orElseThrow();
-
-        return itemLevels.stream()
+        return itemLevelRepository.findAllByName(name)
+                .stream()
                 .map(itemLevelMapper::toItemLevelDto)
                 .collect(Collectors.toList());
     }
@@ -60,11 +55,8 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     public List<ItemLevelDto> findAllItemLevelRequirements(String name, int level) {
-        List<ItemLevel> itemLevelRequirements = itemLevelRepository.findByNameAndLevel(name, level)
-                .map(ItemLevel::getRequiredItemLevels)
-                .orElseThrow();
-
-        return itemLevelRequirements.stream()
+        return itemLevelRepository.findAllRequiredByNameAndLevel(name, level)
+                .stream()
                 .map(itemLevelMapper::toItemLevelDto)
                 .collect(Collectors.toList());
     }

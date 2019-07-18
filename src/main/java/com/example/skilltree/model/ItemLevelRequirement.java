@@ -11,16 +11,15 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(
-        name = "item_levels",
-        uniqueConstraints = {@UniqueConstraint(columnNames = {"item_id", "level"})}
+        name = "item_level_requirements",
+        uniqueConstraints = {@UniqueConstraint(columnNames = {"item_level_id", "required_item_level_id"})}
 )
 @Data
-public class ItemLevel {
+public class ItemLevelRequirement {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,9 +27,9 @@ public class ItemLevel {
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private Item item;
+    private ItemLevel itemLevel;
 
     @NotNull
-    @Min(1)
-    private Integer level;
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private ItemLevel requiredItemLevel;
 }

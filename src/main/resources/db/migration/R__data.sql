@@ -6,6 +6,7 @@ TRUNCATE feature_values CASCADE;
 
 ALTER SEQUENCE items_id_seq RESTART WITH 1;
 ALTER SEQUENCE item_levels_id_seq RESTART WITH 1;
+ALTER SEQUENCE item_level_requirements_id_seq RESTART WITH 1;
 ALTER SEQUENCE features_id_seq RESTART WITH 1;
 ALTER SEQUENCE feature_values_id_seq RESTART WITH 1;
 

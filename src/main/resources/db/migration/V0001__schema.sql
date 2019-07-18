@@ -21,9 +21,9 @@ CREATE TABLE items
 
 CREATE TABLE item_levels
 (
-    id                BIGSERIAL NOT NULL,
-    item_id           BIGINT    NOT NULL,
-    level             INTEGER   NOT NULL,
+    id      BIGSERIAL NOT NULL,
+    item_id BIGINT    NOT NULL,
+    level   INTEGER   NOT NULL,
 
     CONSTRAINT item_levels_pkey
         PRIMARY KEY (id),
@@ -43,8 +43,12 @@ CREATE TABLE item_levels
 
 CREATE TABLE item_level_requirements
 (
-    item_level_id          BIGINT NOT NULL,
-    required_item_level_id BIGINT NOT NULL,
+    id                     BIGSERIAL NOT NULL,
+    item_level_id          BIGINT    NOT NULL,
+    required_item_level_id BIGINT    NOT NULL,
+
+    CONSTRAINT item_level_requirements_pkey
+        PRIMARY KEY (id),
 
     CONSTRAINT item_level_fkey
         FOREIGN KEY (item_level_id)
@@ -56,7 +60,10 @@ CREATE TABLE item_level_requirements
         FOREIGN KEY (required_item_level_id)
             REFERENCES item_levels (id)
             ON DELETE CASCADE
-            ON UPDATE CASCADE
+            ON UPDATE CASCADE,
+
+    CONSTRAINT item_level_requirements_uniqueness
+        UNIQUE (item_level_id, required_item_level_id)
 );
 
 CREATE TABLE features
