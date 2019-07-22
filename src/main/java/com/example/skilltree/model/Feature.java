@@ -3,6 +3,7 @@ package com.example.skilltree.model;
 import com.example.skilltree.enums.FeatureType;
 import lombok.Data;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -22,13 +23,17 @@ public class Feature {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Enumerated(EnumType.STRING)
+    @NotNull
+    private FeatureType type;
+
     @NotEmpty
+    @Column(unique = true)
     private String name;
 
     @NotEmpty
     private String title;
 
-    @Enumerated(EnumType.STRING)
-    @NotNull
-    private FeatureType type;
+    private String description;
+
 }
