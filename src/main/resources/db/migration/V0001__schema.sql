@@ -54,13 +54,7 @@ CREATE TABLE item_level_requirements
         FOREIGN KEY (required_item_id, required_level)
             REFERENCES item_levels (item_id, level)
             ON DELETE CASCADE
-            ON UPDATE CASCADE,
-
-    CONSTRAINT level_check
-        CHECK (level >= 1),
-    CONSTRAINT required_level_check
-        CHECK (level >= 1)
-
+            ON UPDATE CASCADE
 );
 
 CREATE TABLE features
@@ -96,10 +90,7 @@ CREATE TABLE feature_values
         FOREIGN KEY (item_id, level)
             REFERENCES item_levels (item_id, level)
             ON DELETE CASCADE
-            ON UPDATE CASCADE,
-
-    CONSTRAINT level_check
-        CHECK (level >= 1)
+            ON UPDATE CASCADE
 );
 
 ALTER TABLE items
